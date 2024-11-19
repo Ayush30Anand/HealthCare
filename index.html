@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sound@Mentally</title>
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .landing-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .hero-section {
+            text-align: center;
+            max-width: 800px;
+            width: 100%;
+            margin: 0 auto;
+            animation: fadeIn 1s ease-out;
+            padding: 2rem;
+        }
+
+        .hero-text h1 {
+            font-size: 3.5rem;
+            color: #2d3436;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .hero-text p {
+            font-size: 1.2rem;
+            color: #636e72;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .cta-button {
+            padding: 1rem 2rem;
+            font-size: 1.2rem;
+            background: linear-gradient(45deg, #4a90e2, #357abd);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(74, 144, 226, 0.4);
+        }
+
+        /* Login section styles */
+        .login-section {
+            display: none;
+            min-height: 100vh;
+            padding: 2rem;
+            background: linear-gradient(to bottom, #4a90e2, #a1d4f0);
+        }
+
+        .container {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            max-width: 500px;
+            width: 90%;
+            margin: 0 auto;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .form-section {
+            margin-top: 1.5rem;
+        }
+
+        .form-section h2 {
+            color: #2d3436;
+            margin-bottom: 1.5rem;
+        }
+
+        input {
+            width: 100%;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus {
+            border-color: #4a90e2;
+            outline: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1.1rem;
+            color: white;
+            background: linear-gradient(45deg, #4a90e2, #357abd);
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(74, 144, 226, 0.3);
+        }
+
+        .toggle {
+            color: #4a90e2;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .toggle:hover {
+            color: #357abd;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .hero-text h1 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Landing Page -->
+    <div class="landing-page">
+        <div class="hero-section">
+            <div class="hero-text">
+                <h1>Welcome to Sound@Mentally</h1>
+                <p>Connecting doctors and patients through innovative healthcare solutions. Experience seamless medical consultation and care management.</p>
+                <button class="cta-button" onclick="showLoginSection()">Get Started</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Section -->
+    <div class="login-section">
+        <div class="container">
+            <h1>Sound@Mentally</h1>
+
+            <div id="doctor-login" class="form-section">
+                <h2>Doctor Login</h2>
+                <input type="email" id="doctorLoginEmail" placeholder="Email" required>
+                <input type="password" id="doctorLoginPassword" placeholder="Password" required>
+                <button onclick="doctorLogin()">Login</button>
+                <p class="toggle" onclick="showDoctorSignup()">Don't have an account? Signup</p>
+            </div>
+
+            <div id="doctor-signup" class="form-section hidden">
+                <h2>Doctor Signup</h2>
+                <input type="text" id="doctorSignupName" placeholder="Name" required>
+                <input type="email" id="doctorSignupEmail" placeholder="Email" required>
+                <input type="password" id="doctorSignupPassword" placeholder="Password" required>
+                <button onclick="doctorSignup()">Signup</button>
+                <p class="toggle" onclick="showDoctorLogin()">Already have an account? Login</p>
+            </div>
+
+            <div id="patient-login" class="form-section">
+                <h2>Patient Login</h2>
+                <input type="text" id="patientId" placeholder="Enter your Patient ID" required>
+                <button onclick="patientLogin()">Login</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showLoginSection() {
+            document.querySelector('.landing-page').style.display = 'none';
+            document.querySelector('.login-section').style.display = 'flex';
+        }
+
+        function showDoctorSignup() {
+            document.getElementById('doctor-login').classList.add('hidden');
+            document.getElementById('doctor-signup').classList.remove('hidden');
+        }
+
+        function showDoctorLogin() {
+            document.getElementById('doctor-signup').classList.add('hidden');
+            document.getElementById('doctor-login').classList.remove('hidden');
+        }
+
+        function doctorSignup() {
+            const name = document.getElementById('doctorSignupName').value;
+            const email = document.getElementById('doctorSignupEmail').value;
+            const password = document.getElementById('doctorSignupPassword').value;
+
+            if (!name || !email || !password) {
+                alert("Please fill in all fields.");
+                return;
+            }
+
+            const doctors = JSON.parse(localStorage.getItem('doctors')) || [];
+            if (doctors.some(doctor => doctor.email === email)) {
+                alert("Doctor already registered.");
+                return;
+            }
+
+            doctors.push({ name, email, password });
+            localStorage.setItem('doctors', JSON.stringify(doctors));
+            alert("Signup successful. Please log in.");
+            showDoctorLogin();
+        }
+
+        function doctorLogin() {
+    const email = document.getElementById('doctorLoginEmail').value;
+    const password = document.getElementById('doctorLoginPassword').value;
+
+    const doctors = JSON.parse(localStorage.getItem('doctors')) || [];
+    const doctor = doctors.find(d => d.email === email && d.password === password);
+
+    if (doctor) {
+        localStorage.setItem('loggedInDoctorEmail', email);
+        alert("Login successful!");
+        // Clear the form fields
+        document.getElementById('doctorLoginEmail').value = '';
+        document.getElementById('doctorLoginPassword').value = '';
+        window.open("doctor_dashboard.html", "_blank");
+    } else {
+        alert("Invalid credentials.");
+        // Clear the form fields even on failed login
+        document.getElementById('doctorLoginEmail').value = '';
+        document.getElementById('doctorLoginPassword').value = '';
+    }
+}
+
+function patientLogin() {
+    const patientId = document.getElementById('patientId').value;
+    const loggedInDoctor = localStorage.getItem("loggedInDoctorEmail");
+
+    if (!loggedInDoctor) {
+        alert("No doctor is currently logged in.");
+        // Clear the field
+        document.getElementById('patientId').value = '';
+        return;
+    }
+
+    const patients = JSON.parse(localStorage.getItem(loggedInDoctor + "_patients")) || [];
+    const patient = patients.find(p => p.id === patientId);
+
+    if (patient) {
+        localStorage.setItem('loggedInPatientId', patientId);
+        alert("Login successful!");
+        // Clear the field
+        document.getElementById('patientId').value = '';
+        window.open("patient_dashboard.html", "_blank");
+    } else {
+        alert("Invalid Patient ID.");
+        // Clear the field
+        document.getElementById('patientId').value = '';
+    }
+}
+
+function patientLogin() {
+    const patientId = document.getElementById('patientId').value;
+    const loggedInDoctor = localStorage.getItem("loggedInDoctorEmail");
+
+    if (!loggedInDoctor) {
+        alert("No doctor is currently logged in.");
+        // Clear the field
+        document.getElementById('patientId').value = '';
+        return;
+    }
+
+    const patients = JSON.parse(localStorage.getItem(loggedInDoctor + "_patients")) || [];
+    const patient = patients.find(p => p.id === patientId);
+
+    if (patient) {
+        localStorage.setItem('loggedInPatientId', patientId);
+        alert("Login successful!");
+        // Clear the field
+        document.getElementById('patientId').value = '';
+        window.open("patient_dashboard.html", "_blank");
+    } else {
+        alert("Invalid Patient ID.");
+        // Clear the field
+        document.getElementById('patientId').value = '';
+    }
+}
+    </script>
+</body>
+</html>

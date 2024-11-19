@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Dashboard</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        header {
+            background-color: #4a90e2;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .container {
+            width: 100%;
+            max-width: 800px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+        .section-title {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: #4a90e2;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+        th {
+            background-color: #4a90e2;
+            color: white;
+        }
+        .back-home {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .back-home button {
+            background-color: #4a90e2;
+        }
+    </style>
+</head>
+<body>
+
+    <header>Patient Dashboard</header>
+
+    <div class="container">
+        <div class="section-title">Assigned Activities</div>
+        <table id="activityTable">
+            <thead>
+                <tr>
+                    <th>Activity</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Dynamic content will be added here -->
+            </tbody>
+        </table>
+    </div>
+
+    
+
+    <script>
+        const patientId = localStorage.getItem("loggedInPatientId");
+
+        function fetchActivities(patientId) {
+            return JSON.parse(localStorage.getItem(patientId + "_activities")) || [];
+        }
+
+        function renderActivities() {
+            const activities = fetchActivities(patientId);
+            const activityTableBody = document.getElementById("activityTable").querySelector("tbody");
+
+            activityTableBody.innerHTML = "";
+
+            if (activities.length === 0) {
+                activityTableBody.innerHTML = "<tr><td>No activities assigned yet</td></tr>";
+            } else {
+                activities.forEach(activity => {
+                    activityTableBody.innerHTML += `
+                        <tr>
+                            <td>${activity}</td>
+                        </tr>`;
+                });
+            }
+        }
+
+        renderActivities();
+    </script>
+
+</body>
+</html>
